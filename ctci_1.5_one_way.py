@@ -49,3 +49,5 @@ def isOneEditAway(s1, s2):
     return True
 
 print isOneEditAway('pies', 'ple')
+print isOneEditAway('pale', 'bale')
+print isOneEditAway('pales', 'pale')
