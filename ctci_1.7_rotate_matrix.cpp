@@ -1,5 +1,3 @@
-#include "pch.h"
-
 #include <iostream>
 #include <vector>
 
@@ -13,8 +11,9 @@ void printSquareMatrix(int **M, int n)
 		{
 			cout << M[i][j] << " ";
 		}
-		cout << endl;
 	}
+
+	cout << endl;
 
 }
 
@@ -87,26 +86,37 @@ void rotateSquareMatrix(int** M, int n)
 
 int main()
 {
-	int n;
+	int T;
 
-	cout << "Enter N for NxN matrix:" << endl;
-	cin >> n;
+	cin >> T;
 
-	int **M = new int*[n];
-	for (int i = 0; i < n; i++)
+	while (T--)
 	{
-		M[i] = new int[n];
-	}
-	cout << "Enter the matrix elements:" << endl;
-	for (int i = 0; i < n; i++)
-	{
-		for (int j = 0; j < n; j++)
+		int n;
+		cin >> n;
+		int **M = new int*[n];
+		for (int i = 0; i < n; i++)
 		{
-			cin >> M[i][j];
+			M[i] = new int[n];
 		}
+
+		for (int i = 0; i < n; i++)
+		{
+			for (int j = 0; j < n; j++)
+			{
+				cin >> M[i][j];
+			}
+		}
+
+		rotateSquareMatrix(M, n);
+
+		printSquareMatrix(M, n);
+
+		//free memory
+		for (int i = 0; i < n; i++)
+			delete[] M[i];
+
+		delete[] M;
 	}
 
-	rotateSquareMatrix(M, n);
-
-	printSquareMatrix(M, n);
 }
