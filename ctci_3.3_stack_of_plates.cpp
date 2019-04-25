@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <stack>
+#include <climits> 
 
 using namespace std;
 
@@ -57,25 +58,35 @@ public:
 
 	void pop()
 	{
-		setofstack.back().pop();
+		if(setofstack.size() >0 && !setofstack.back().empty())
+			setofstack.back().pop();
 
-		if (setofstack.back().empty())
+		if (setofstack.size() > 0 && setofstack.back().empty())
 			setofstack.pop_back();
 	}
 
 	int top()
 	{
-		return setofstack.back().top();
+		if (setofstack.size() > 0)
+			return setofstack.back().top();
+		else
+			return INT_MAX;
 	}
 
 	int topAt(int index)
 	{
-		return setofstack[index].top();
+		if (setofstack.size() > 0 && index < setofstack.size())
+			return setofstack[index].top();
+		else
+			return INT_MAX;
 	}
 
 	void popAt(int index)
 	{
-		setofstack[index].pop();
+		if (setofstack.size() > 0 && index < setofstack.size() && !setofstack[index].empty())
+			setofstack[index].pop();
+		else
+			return;
 
 		for (int i = index + 1; i < setofstack.size(); i++)
 		{
@@ -131,6 +142,5 @@ int main()
 
 	} while (1);
 }
-
 
 
