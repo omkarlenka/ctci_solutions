@@ -10,10 +10,6 @@
 
 using namespace std;
 
-#define ll long long
-
-const unsigned int MAX = 1000000007;
-
 void printMatrix(int **G, int r, int c)
 {
     for(int i = 0;i<r;i++)
@@ -25,15 +21,18 @@ void printMatrix(int **G, int r, int c)
     }
 }
 
-ll countPaths(int**G, int r, int c)
+int countPaths(int**G, int r, int c)
 {
-    ll **paths = new ll*[r];
+    int **paths = new int*[r];
     for(int i = 0;i<r;i++)
     {
-        paths[i] = new ll[c];
+        paths[i] = new int[c];
     }
     
-    paths[0][0] = 1;
+    if(G[0][0] == 0)
+        paths[0][0] = 1;
+    else
+        paths[0][0] = 0;
 
     for(int i = 0; i<r;i++)
     {
@@ -55,23 +54,12 @@ ll countPaths(int**G, int r, int c)
             }
             else if(i > 0 && j > 0)
             {
-                paths[i][j] = (paths[i][j-1] + paths[i-1][j]) % MAX;
+                paths[i][j] = paths[i][j-1] + paths[i-1][j];
             }
         }
     }
     
-//    printMatrix(paths, r, c);
-    
-    ll res = paths[r-1][c-1];
-    
-    for(int i=0;i<r;i++)
-    {
-        delete[] paths[i];
-    }
-    
-    delete[] paths;
-    
-    return  res % MAX;
+    return paths[r-1][c-1];
 }
 
 int main()
@@ -85,7 +73,7 @@ int main()
         cin >> N >> M >> K;
         
         int **G = new int*[N];
-        for(int i = 0;i<N;i++)
+        for(int i = 0;i<M;i++)
             G[i] = new int[M];
         
         for(int i = 0;i<N;i++)
@@ -105,14 +93,7 @@ int main()
             G[r-1][c-1] = -1;
         }
         
-        cout << countPaths(G, N, M) << endl;
-        
-        for(int i=0;i<N;i++)
-        {
-            delete[] G[i];
-        }
-        
-        delete[] G;
+        cout << countPaths(G, N, M);
         
     }
     return 0;
